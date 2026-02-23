@@ -1,27 +1,9 @@
-import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 
 export default function HeroVideo() {
-  const [videoSrc, setVideoSrc] = useState<string>("");
+  // Use the direct Vercel Blob URL. No need for useEffect/fetching blobs.
+  const videoUrl = "https://irmewedsmzdzjqhl.public.blob.vercel-storage.com/showcase.mp4";
 
-  useEffect(() => {
-    const videoUrl = "https://irmewedsmzdzjqhl.public.blob.vercel-storage.com/showcase.mp4";
-    let activeUrl = "";
-
-    fetch(videoUrl)
-      .then(res => res.blob())
-      .then(blob => {
-        activeUrl = URL.createObjectURL(blob);
-        setVideoSrc(activeUrl);
-      })
-      .catch(err => console.error("Video load error:", err));
-
-    return () => {
-      if (activeUrl) URL.revokeObjectURL(activeUrl);
-    };
-  }, []);
-
-  // Smooth scroll helper
   const scrollToSection = (id: string) => {
     const element = document.querySelector(id);
     if (element) {
@@ -31,25 +13,22 @@ export default function HeroVideo() {
 
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden bg-[#1B2B3A]">
-      {/* Video with Soft Mask */}
       <div className="absolute inset-0 z-0">
-        {videoSrc && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover opacity-40 object-center transition-opacity duration-1000"
-          >
-            <source src={videoSrc} type="video/mp4" />
-          </video>
-        )}
-        {/* Soft Radial Gradient for focus */}
+        {/* Directly point to the URL so the browser can stream it efficiently */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-40 object-center"
+        >
+          <source src={videoUrl} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
         <div className="absolute inset-0 bg-gradient-to-r from-[#1B2B3A] via-[#1B2B3A]/60 to-transparent"></div>
       </div>
 
-      {/* Overlay Content */}
       <div className="relative z-10 flex h-full flex-col justify-center items-start max-w-7xl mx-auto px-6 lg:px-12">
         <div className="max-w-4xl">
           <span className="inline-block py-1.5 px-4 rounded-full bg-[#CA9434]/20 border border-[#CA9434]/30 text-[#CA9434] text-xs font-bold tracking-[0.2em] uppercase mb-8">
@@ -92,12 +71,10 @@ export default function HeroVideo() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
          <ChevronDown className="text-white/30" size={32} />
       </div>
 
-      {/* Soft Bottom Mask */}
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent"></div>
     </section>
   );
