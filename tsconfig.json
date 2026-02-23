@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "noUnusedLocals": false,
+"noUnusedParameters": false,
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
