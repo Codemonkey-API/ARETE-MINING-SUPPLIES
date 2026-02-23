@@ -21,3 +21,4 @@
    ```bash
    git clone [https://github.com/CodemonkeyAPI/arete-mining.git](https://github.com/Codemonkey-API/arete-mining.git)
    ```
+# ARETE-MINING-SUPPLIES
